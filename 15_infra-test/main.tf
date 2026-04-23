@@ -35,13 +35,13 @@ provider "aws" {
 # Modules
 # ---------------------------------------------
 module "lambda" {
-  source = "./modules/lambda"
+  source          = "./modules/lambda"
   lambda_zip_path = "${path.module}/app/lambda.zip"
 }
 
 module "apigw" {
-  source = "./modules/apigateway"
+  source           = "./modules/apigateway"
   integration_type = "AWS_PROXY"
-  integration_uri = module.lambda.invoke_arn
-  route_target = module.lambda.function_name
+  integration_uri  = module.lambda.invoke_arn
+  route_target     = module.lambda.function_name
 }
