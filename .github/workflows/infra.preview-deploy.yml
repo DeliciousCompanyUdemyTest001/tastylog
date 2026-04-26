@@ -57,3 +57,30 @@ jobs:
           -no-color \
           -input=false \
           -detailed-exitcode
+      - name: Slack notify
+        uses: slackapi/slack-github-action@v1
+        with:
+          channel-id: 'C0AV4JZ0XA7'
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "Hello World:👻",
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "This is a header block",
+                    "emoji": true
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
