@@ -111,3 +111,12 @@ jobs:
       - name: Terraform init
         run: |
           terraform init -no-color
+      - name: Terraform apply
+        run: |
+          terraform apply \
+            -var 'project=${{ env.TF_PROJECT}}' \
+            -var 'environment=${{ env.TF_ENVIRONMENT}}' \
+            -no-color \
+            -input=false \
+            -auto-approve
+            
