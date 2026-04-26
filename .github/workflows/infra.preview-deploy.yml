@@ -119,4 +119,30 @@ jobs:
             -no-color \
             -input=false \
             -auto-approve
-            
+      - name: Slack notify
+        if: always()
+        uses: slackapi/slack-github-action@v1
+        with:
+          channel-id: 'C0AV4JZ0XA7'
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "Runner Finished2: ${{ steps.apply.outcome}}",
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "${{ github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
