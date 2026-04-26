@@ -28,6 +28,8 @@ jobs:
   preview:
     name: "Preview"
     runs-on: ubuntu-latest
+    outputs:
+      TF_PLAN_EXITCODE: ${{ steps.plan.outputs.exitcode}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -50,6 +52,8 @@ jobs:
         run: |
           terraform validate -no-color
       - name: Terraform plan
+        id: plan
+        continue-on-error: true
         run: |
           terraform plan \
           -var 'project=${{ env.TF_PROJECT}}' \
@@ -65,19 +69,18 @@ jobs:
             {
               "blocks": [
                 {
-                  "type": "section",
+                  "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "Hello World:👻",
+                    "text": "Request for approve",
                     "emoji": true
                   }
                 },
                 {
-                  "type": "header",
+                  "type": "section",
                   "text": {
-                    "type": "plain_text",
-                    "text": "This is a header block",
-                    "emoji": true
+                    "type": "mrkdwn",
+                    "text": "${{ github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"
                   }
                 }
               ]
